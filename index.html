@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JANK - Just Another Note Keeper</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Toolbar -->
+        <div id="toolbar">
+            <div class="toolbar-section">
+                <div class="app-title">📝 JANK</div>
+                <button id="new-btn" class="toolbar-btn" title="New File (Ctrl+N)">
+                    <span>📄</span> New
+                </button>
+                <button id="open-btn" class="toolbar-btn" title="Open File (Ctrl+O)">
+                    <span>📁</span> Open
+                </button>
+                <button id="save-btn" class="toolbar-btn" title="Save File (Ctrl+S)">
+                    <span>💾</span> Save
+                </button>
+                <button id="save-as-btn" class="toolbar-btn" title="Save As... (Ctrl+Shift+S)">
+                    <span>📝</span> Save As
+                </button>
+            </div>
+            
+            <div class="toolbar-section">
+                <span class="toolbar-label">View:</span>
+                <button id="side-by-side-btn" class="view-btn active" title="Side by Side (Ctrl+1)">
+                    <span>🔳</span> Side by Side
+                </button>
+                <button id="editor-only-btn" class="view-btn" title="Editor Only (Ctrl+2)">
+                    <span>✏️</span> Editor
+                </button>
+                <button id="preview-only-btn" class="view-btn" title="Preview Only (Ctrl+3)">
+                    <span>👁️</span> Preview
+                </button>
+            </div>
+            
+            <div class="toolbar-section">
+                <span class="toolbar-label">Theme:</span>
+                <button id="theme-toggle-btn" class="view-btn" title="Toggle Light/Dark Mode">
+                    <span>🌙</span> Dark
+                </button>
+                <button id="customize-theme-btn" class="toolbar-btn" title="Customize Colors">
+                    <span>🎨</span> Colors
+                </button>
+            </div>
+
+            <div class="toolbar-section">
+                <span id="file-status">Untitled</span>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div id="main-container" class="side-by-side-view">
+            <!-- Editor Panel -->
+            <div id="editor-panel" class="panel">
+                <div class="panel-header">
+                    <h3>📝 Editor</h3>
+                    <div class="panel-controls">
+                        <span id="word-count">0 words</span>
+                        <span id="char-count">0 characters</span>
+                    </div>
+                </div>
+                <textarea 
+                    id="editor" 
+                    placeholder="Start typing your markdown here...&#10;&#10;# Welcome to JANK&#10;### Just Another Note Keeper&#10;&#10;This is a **markdown** editor with live preview.&#10;&#10;## Features&#10;- Side-by-side editing&#10;- Real-time preview&#10;- Syntax highlighting&#10;- File operations (New, Open, Save)&#10;- Multiple view modes&#10;&#10;### Try it out!&#10;&#10;Write some *italic* or **bold** text.&#10;&#10;```javascript&#10;console.log('Hello from JANK!');&#10;```&#10;&#10;> This is a blockquote&#10;&#10;- [x] Task lists are supported&#10;- [ ] Uncompleted task"
+                ></textarea>
+            </div>
+
+            <!-- Preview Panel -->
+            <div id="preview-panel" class="panel">
+                <div class="panel-header">
+                    <h3>👁️ Preview</h3>
+                    <div class="panel-controls">
+                        <button id="sync-scroll-btn" class="sync-btn active" title="Sync Scroll">
+                            🔗 Sync Scroll
+                        </button>
+                    </div>
+                </div>
+                <div id="preview" class="markdown-body"></div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div id="status-bar">
+            <div class="status-section">
+                <span id="cursor-position">Ln 1, Col 1</span>
+            </div>
+            <div class="status-section">
+                <span id="file-path">No file opened</span>
+            </div>
+            <div class="status-section">
+                <span id="save-status">Ready</span>
+            </div>
+        </div>
+
+        <!-- Theme Customization Modal -->
+        <div id="theme-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🎨 Customize Theme</h3>
+                    <button id="close-theme-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="theme-presets">
+                        <h4>Preset Themes</h4>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" data-theme="light">☀️ Light</button>
+                            <button class="preset-btn" data-theme="dark">🌙 Dark</button>
+                            <button class="preset-btn" data-theme="solarized">🌅 Solarized</button>
+                            <button class="preset-btn" data-theme="monokai">🌃 Monokai</button>
+                            <button class="preset-btn" data-theme="github">📝 GitHub</button>
+                            <button class="preset-btn" data-theme="dracula">🧛 Dracula</button>
+                        </div>
+                    </div>
+                    
+                    <div class="custom-colors">
+                        <h4>Create Custom Theme</h4>
+                        <div class="color-inputs">
+                            <div class="color-group">
+                                <label for="bg-color">Background Color:</label>
+                                <div class="color-input-container">
+                                    <input type="color" id="bg-color" class="color-input">
+                                    <span class="color-value" id="bg-color-value">#ffffff</span>
+                                </div>
+                            </div>
+                            <div class="color-group">
+                                <label for="text-color">Text Color:</label>
+                                <div class="color-input-container">
+                                    <input type="color" id="text-color" class="color-input">
+                                    <span class="color-value" id="text-color-value">#24292f</span>
+                                </div>
+                            </div>
+                            <div class="color-group">
+                                <label for="accent-color">Accent Color:</label>
+                                <div class="color-input-container">
+                                    <input type="color" id="accent-color" class="color-input">
+                                    <span class="color-value" id="accent-color-value">#0969da</span>
+                                </div>
+                            </div>
+                            <div class="color-group">
+                                <label for="editor-bg-color">Editor Background:</label>
+                                <div class="color-input-container">
+                                    <input type="color" id="editor-bg-color" class="color-input">
+                                    <span class="color-value" id="editor-bg-color-value">#ffffff</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-theme-actions">
+                            <button id="preview-custom-theme" class="preview-btn">Preview</button>
+                            <button id="apply-custom-theme" class="apply-btn">Apply & Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="renderer.js"></script>
+</body>
+</html>
