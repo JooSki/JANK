@@ -2,6 +2,12 @@
 
 A modern markdown editor with side-by-side editing and preview functionality built with Electron.
 
+## Preview
+
+![JANK Dark Theme Preview](media/JANK-preview-dark.png)
+
+*JANK running with the dark theme, showing side-by-side markdown editing and preview*
+
 ## Features
 
 - **Side-by-side editing**: View your markdown source and rendered output simultaneously
