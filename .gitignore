@@ -124,9 +124,6 @@ builds/
 dist/
 release/
 
-# Assets directory (until we have actual icons)
-assets/
-
 # Dependencies
 node_modules/
 
@@ -169,3 +166,8 @@ jspm_packages/
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# Code signing certificates (sensitive)
+*.pfx
+*.p12
+export-cert.ps1

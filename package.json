@@ -34,12 +34,12 @@
       "index.html",
       "styles.css",
       "package.json",
-      "assets/icon.png",
+      "assets/**/*",
       "node_modules/**/*"
     ],
     "mac": {
       "category": "public.app-category.productivity",
-      "icon": "assets/icon.png",
+      "icon": "assets/JANK-icon-512.png",
       "target": [
         {
           "target": "dmg",
@@ -51,7 +51,7 @@
       ]
     },
     "win": {
-      "icon": "assets/icon.png",
+      "icon": "assets/JANK-icon-512.png",
       "target": [
         {
           "target": "nsis",
@@ -70,7 +70,7 @@
       ]
     },
     "linux": {
-      "icon": "assets/icon.png",
+      "icon": "assets/JANK-icon-512.png",
       "category": "Office",
       "target": [
         {
